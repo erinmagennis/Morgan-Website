@@ -926,76 +926,42 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: var(--space-lg);
+            grid-template-columns: 1fr 1.3fr;
+            grid-template-rows: auto 1fr;
+            grid-template-areas:
+                "header form"
+                "info form";
+            gap: var(--space-md) var(--space-lg);
+            align-items: start;
+        }
+
+        .contact-header {
+            grid-area: header;
+            text-align: left;
+        }
+
+        .contact-header .section-subtitle {
+            margin: 0;
+        }
+
+        .contact-left {
+            grid-area: info;
         }
 
         .contact-form-wrapper {
+            grid-area: form;
             background: var(--white);
-            padding: var(--space-md);
+            padding: var(--space-sm);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-soft);
+            overflow: hidden;
         }
 
-        .contact-form-wrapper h3 {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            color: var(--purple-deep);
-            margin-bottom: var(--space-xs);
-        }
-
-        .contact-form-wrapper > p {
-            color: var(--purple-text);
-            opacity: 0.85;
-            margin-bottom: var(--space-md);
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: var(--space-sm);
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--purple-deep);
-            margin-bottom: 4px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .google-form-embed {
             width: 100%;
-            padding: 10px 14px;
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            border: 2px solid var(--lavender);
-            border-radius: var(--radius-sm);
-            background: var(--white);
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--magenta);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-sm);
-        }
-
-        @media (max-width: 500px) {
-            .form-row { grid-template-columns: 1fr; }
+            height: 1350px;
+            border: none;
+            display: block;
         }
 
         .contact-info {
@@ -1059,8 +1025,34 @@
             border-radius: 20px;
         }
 
-        @media (max-width: 800px) {
-            .contact-grid { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                grid-template-areas:
+                    "header"
+                    "form"
+                    "info";
+            }
+            .contact-header {
+                text-align: center;
+            }
+            .contact-header .section-subtitle {
+                margin: 0 auto;
+            }
+            .google-form-embed {
+                height: 1350px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .google-form-embed {
+                height: 1400px;
+            }
+            .contact-form-wrapper {
+                padding: var(--space-xs);
+                border-radius: var(--radius-sm);
+            }
         }
 
         /* Footer */
@@ -1428,64 +1420,15 @@
     <!-- Contact -->
     <section id="contact" class="contact">
         <div class="section-inner">
-            <header class="section-header fade-in">
-                <p class="section-eyebrow">Get Started</p>
-                <h2 class="section-title">Book Your Appointment</h2>
-                <p class="section-subtitle">Submit your request and I'll personally get back to you to schedule.</p>
-            </header>
-
             <div class="contact-grid">
-                <div class="contact-form-wrapper fade-in">
-                    <h3>Request an Appointment</h3>
-                    <p>Fill out the form and I'll reach out to confirm.</p>
+                <header class="contact-header fade-in">
+                    <p class="section-eyebrow">Get Started</p>
+                    <h2 class="section-title">Book Your Appointment</h2>
+                    <p class="section-subtitle">Submit your request and I'll personally get back to you to schedule.</p>
+                </header>
 
-                    <form action="#" method="POST">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Name *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone *</label>
-                                <input type="tel" id="phone" name="phone" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" id="city" name="city" placeholder="e.g., Manhattan Beach">
-                            </div>
-                            <div class="form-group">
-                                <label for="visit-type">Visit Type</label>
-                                <select id="visit-type" name="visit-type">
-                                    <option value="">Select...</option>
-                                    <option value="home">Home Visit</option>
-                                    <option value="office">In-Office (Beach Cities)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="datetime">Preferred Date & Time</label>
-                            <input type="text" id="datetime" name="datetime" placeholder="e.g., Tuesday afternoons">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">What brings you in?</label>
-                            <textarea id="message" name="message" placeholder="Tell me a bit about what you're experiencing..."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Request</button>
-                    </form>
-                </div>
-
-                <div class="contact-info">
+                <div class="contact-left">
+                    <div class="contact-info">
                     <article class="contact-card fade-in">
                         <h4>📍 In-Office</h4>
                         <p><strong>Beach Cities Cryo and Wellness</strong><br>
@@ -1532,6 +1475,18 @@
                         </p>
                         <p style="margin-top: 6px; font-size: 0.8rem; opacity: 0.7;">Cash only</p>
                     </article>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper fade-in">
+                    <iframe
+                        src="https://docs.google.com/forms/d/e/1FAIpQLScQ3eWPVfxBCCY5BXwu5WaN5QYw2yEfca1RTquWAXBahW-rWg/viewform?embedded=true"
+                        class="google-form-embed"
+                        frameborder="0"
+                        marginheight="0"
+                        marginwidth="0">
+                        Loading...
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -1600,12 +1555,6 @@
             });
         });
 
-        // Form
-        document.querySelector('form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you! Dr. Morgan will be in touch soon.');
-            e.target.reset();
-        });
     </script>
 </body>
 </html>
